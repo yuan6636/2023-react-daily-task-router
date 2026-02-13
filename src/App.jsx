@@ -1,5 +1,5 @@
 import './App.css';
-import { HashRouter, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { HashRouter, NavLink, Outlet, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const Home = () => {
   return <p>這是首頁</p>;
@@ -40,6 +40,20 @@ const Register = () => {
   return <p>這是註冊頁面</p>;
 };
 
+const Post = () => {
+  return (
+    <>
+      <h3>Post 頁面</h3>
+      <Outlet />
+    </>
+  );
+}
+
+const PostId = () => {
+  const params = useParams();
+  return <p>Post ID: {params.postId}</p>
+}
+
 function App() {
   return (
     <div className="container">
@@ -57,6 +71,12 @@ function App() {
           <NavLink to="/todo">
             <p>Todo 頁面</p>
           </NavLink>
+          <NavLink to="/post">
+            <p>Post 頁面</p>
+          </NavLink>
+          <NavLink to="/post/post123">
+            <p>Post 詳細頁面</p>
+          </NavLink>
         </div>
         {/* Routes, Route 練習區 */}
         <Routes>
@@ -64,11 +84,17 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/todo" element={<Todo />}></Route>
-          <Route path="*" element={
-            <main>
-              <p>404 找不到頁面！</p>
-            </main>
-          }></Route>
+          <Route path="/post" element={<Post />}>
+            <Route path=":postId" element={<PostId />}></Route>
+          </Route>
+          <Route
+            path="*"
+            element={
+              <main>
+                <p>404 找不到頁面！</p>
+              </main>
+            }
+          ></Route>
         </Routes>
         {/* 練習區 */}
       </HashRouter>
