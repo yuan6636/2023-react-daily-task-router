@@ -1,14 +1,39 @@
 import './App.css';
-import { HashRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { HashRouter, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 const Home = () => {
   return <p>這是首頁</p>;
 }
 
+const Logout = () => {
+  const navigate = useNavigate();
+  const logout = () => {
+    navigate('/login', { 
+      state: {
+        message: '登出成功'
+      },
+      replace: true
+  });
+  };
+
+  return (
+    <button type="button" onClick={logout}>
+      登出
+    </button>
+  );
+};
+
 const Todo = () => {
-  return <p>這是 Todo 頁面</p>;
+  return (
+    <>
+      <p>這是 Todo 頁面</p>
+      <Logout />
+    </>
+  );
 };
 const Login = () => {
+  const message = useLocation().state?.message;
+  console.log(message);
   return <p>這是登入頁面</p>;
 };
 const Register = () => {
